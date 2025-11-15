@@ -1,12 +1,11 @@
 #ifndef ASSIGNMENT3_H
 #define ASSIGNMENT3_H
 
-#include <cstddef>   // size_t
-#include <vector>    // for Q2
+#include <cstddef>
+#include <vector>
+#include <stdexcept>
 
-// =======================
 // Q1: Template Queue ADT
-// =======================
 
 template <typename Item_Type>
 class Queue {
@@ -31,7 +30,6 @@ public:
         }
     }
 
-    // push: insert at rear (O(1))
     void push(const Item_Type& item) {
         Node* new_node = new Node(item);
 
@@ -45,7 +43,6 @@ public:
         num_items++;
     }
 
-    // pop: remove from front (O(1))
     void pop() {
         if (empty()) {
             throw std::runtime_error("pop() called on empty queue");
@@ -61,7 +58,6 @@ public:
         }
     }
 
-    // front: access front element
     Item_Type front() const {
         if (empty()) {
             throw std::runtime_error("front() called on empty queue");
@@ -69,39 +65,29 @@ public:
         return front_ptr->data;
     }
 
-    // size: number of items
     size_t size() const {
         return num_items;
     }
 
-    // empty: true if queue is empty
     bool empty() const {
         return num_items == 0;
     }
 
-    // move_to_rear: move front element to back, using only push, pop, front
     void move_to_rear() {
         if (size() <= 1) {
-            return; // nothing to do
+            return;
         }
-        Item_Type temp = front(); // read front value
-        pop();                    // remove it
-        push(temp);               // push it at the rear
+        Item_Type temp = front();
+        pop();
+        push(temp);
     }
 };
 
-// =======================
-// Q2: Recursive Linear Search
-// (last occurrence in a vector)
-// =======================
+// Q2: Recursive Linear Search (last occurrence)
 
-// Returns the index of the *last* occurrence of target in vec[0..index].
-// If target is not found, returns -1.
 int recursive_last_index(const std::vector<int>& vec, int target, int index);
 
-// =======================
 // Q3: Insertion Sort on Linked List
-// =======================
 
 struct Node {
     int data;
@@ -109,7 +95,6 @@ struct Node {
     Node(int d, Node* n = nullptr) : data(d), next(n) {}
 };
 
-// Sorts a singly linked list using insertion sort and returns new head.
 Node* insertion_sort_list(Node* head);
 
 #endif // ASSIGNMENT3_H
